@@ -9,7 +9,7 @@ docker_config: build_env
 images:
 	docker compose -f compose.dev images
 
-build: composer install_artisan_encryption_key npm_run_dev
+build: composer
 
 docker_build:
 	docker compose -f compose.dev.yaml build
@@ -18,7 +18,10 @@ composer:
 	docker compose -f compose.dev.yaml exec workspace bash -c "composer install"
 
 install_artisan_encryption_key:
-	docker compose -f compose.dev.yaml exec workspace bash -c "php artisan key:generate"
+	docker compose -f compose.dev.yaml run --rm workspace bash -c "php artisan key:generate"
+
+artisan_run_migrations:
+	docker compose -f compose.dev.yaml exec workspace php artisan migrate
 
 npm_run_dev:
 	docker compose -f compose.dev.yaml exec -it workspace bash -c "/usr/local/bin/npm install && /usr/local/bin/npm run dev"
@@ -26,17 +29,17 @@ npm_run_dev:
 bash:
 	docker compose -f compose.dev.yaml exec workspace bash
 
-up: build_env up_nobuild build
+up: build_env up_nobuild build artisan_run_migrations npm_run_dev
 
-up_nobuild:
+up_nobuild: install_artisan_encryption_key
 	docker compose -f compose.dev.yaml up -d --force-recreate --remove-orphans
 	bin/wait_for_docker.bash "database system is ready to accept connections"
 
 down:
-	docker-compose down
+	docker compose down
 
 down_ci:
-	docker-compose -f compose.dev.yaml down || exit 0
+	docker compose -f compose.dev.yaml down || exit 0
 
 #docker_clean_dangling_images_and_volumes:
 docker_clean:
