@@ -65,6 +65,7 @@ services:
       - .env
     volumes:
       - ./:/var/www
+    working_dir: /var/www
     networks:
       - laravel-development
 
