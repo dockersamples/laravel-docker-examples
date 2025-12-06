@@ -8,7 +8,7 @@ services:
       - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       # Map port 80 inside the container to the port specified by 'NGINX_PORT' on the host machine
-      - "80:80"
+      - "8080:80"
     environment:
       - NGINX_HOST=localhost
     networks:
@@ -75,9 +75,9 @@ services:
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     environment:
-      - POSTGRES_DB=app
-      - POSTGRES_USER=laravel
-      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=laravel_docker_examples
+      - POSTGRES_USER=laravel_user
+      - POSTGRES_PASSWORD=mazda323
     volumes:
       - postgres-data-development:/var/lib/postgresql/data
     networks:
