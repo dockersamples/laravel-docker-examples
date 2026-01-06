@@ -71,13 +71,13 @@ services:
       - laravel-development
 
   postgres:
-    image: postgres:16
+    image: postgres:17
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     environment:
-      - POSTGRES_DB=app
-      - POSTGRES_USER=laravel
-      - POSTGRES_PASSWORD=secret
+      POSTGRES_DB: app
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD: secret
     volumes:
       - postgres-data-development:/var/lib/postgresql/data
     networks:
