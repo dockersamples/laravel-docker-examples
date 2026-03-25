@@ -191,7 +191,7 @@ The production image can be deployed to any Docker-compatible hosting environmen
 
 ## Technical Details
 
-- **PHP**: Version **8.4 FPM** is used for optimal performance in both development and production environments.
+- **PHP**: Version **8.5 FPM** is used for optimal performance in both development and production environments.
 - **Node.js**: Version **22.x** is used in the development environment for building frontend assets with Vite.
 - **PostgreSQL**: Version **16** is used as the database in the examples, but you can adjust the configuration to use MySQL if preferred.
 - **Redis**: Used for caching and session management, integrated into both development and production environments.
