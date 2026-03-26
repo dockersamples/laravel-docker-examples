@@ -97,6 +97,17 @@ git clone https://github.com/rw4lll/laravel-docker-examples.git
 cd laravel-docker-examples
 ```
 
+### On Linux, Mac or shell with make
+
+If you are using a Linux, Mac or Windows with a shell such as Cygwin or similar you can run all the following steps in
+one just by using `make` . 
+
+- To start the development stack run `make up`
+- You can get on the workspace container by running `make bash`
+- To stop the containers run `make down`.
+
+You can check the Makefile to see how all the steps below are automated.
+
 ### Setting Up the Development Environment
 
 1. Copy the .env.example file to .env and adjust any necessary environment variables:

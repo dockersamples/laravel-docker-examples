@@ -77,6 +77,11 @@ RUN echo 'export NVM_DIR="$HOME/.nvm"' >> /home/www/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/www/.bashrc && \
     echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> /home/www/.bashrc
 
+# Bash completion does not work in one line docker compose exec commands so forcing the installation of symlinks
+USER root
+RUN ln -sf /home/www/.nvm/versions/node/v22.0.0/bin/node /usr/local/bin/node && \
+    ln -sf /home/www/.nvm/versions/node/v22.0.0/bin/npm /usr/local/bin/npm
+
 # Set the working directory
 WORKDIR /var/www
 
