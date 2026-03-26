@@ -82,6 +82,42 @@ services:
       - postgres-data-development:/var/lib/postgresql/data
     networks:
       - laravel-development
+  
+  # Queue Worker Service
+  laravel-queue-worker:
+    build:
+      context: .
+      dockerfile: ./docker/common/php-fpm/Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel-development
+    ports:
+      - 9002:9002
+    command: php artisan queue:work --queue=default --sleep=3 --tries=3 --max-time=3600
+    restart: always 
+    depends_on:
+        php-fpm:
+          condition: service_started  # Wait for php-fpm to start
+
+  # Scheduler Service
+  laravel-scheduler-worker:
+    build:
+      context: .
+      dockerfile: ./docker/common/php-fpm/Dockerfile
+    working_dir: /var/www
+    ports:
+      - 9001:9001
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel-development
+    command: php artisan schedule:work
+    restart: always 
+    depends_on:
+        php-fpm:
+          condition: service_started  # Wait for php-fpm to start
 
   redis:
     image: redis:alpine
